@@ -1,17 +1,12 @@
-#!/bin/bash
+#! /bin/bash
 # Salon Appointment Scheduler - freeCodeCamp
 
-# Para evitar que pida la pass todo el tiempo
-export PGPASSWORD="freecodecamp"
+PSQL="psql -X --username=freecodecamp --dbname=salon --no-align --tuples-only -c"
 
-PSQL="psql -X --username=freecodecamp --host=127.0.0.1 --dbname=salon --no-align --tuples-only -c"
-
-# Función para eliminar espacios extra
 trim() {
   echo "$1" | sed -E 's/^[[:space:]]+|[[:space:]]+$//g'
 }
 
-# Mostrar lista de servicios
 print_services() {
   SERVICE_LIST=$($PSQL "SELECT service_id, name FROM services ORDER BY service_id;")
   echo "$SERVICE_LIST" | while IFS="|" read SID SNAME
@@ -64,3 +59,4 @@ main_menu() {
 }
 
 main_menu
+
